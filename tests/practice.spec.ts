@@ -16,4 +16,5 @@ test("test login", async ({ page }) => {
   await expect(page).toHaveURL(
     "https://practicetestautomation.com/practice-test-login/",
   );
+  await expect(page.getByRole("button", { name: "Submit" })).toBeVisible();
 });
