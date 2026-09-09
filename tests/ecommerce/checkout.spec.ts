@@ -36,5 +36,76 @@ test("complete checkout successfully", async ({ page }) => {
   await expect(page).toHaveURL("https://www.saucedemo.com/inventory.html");
 });
 
+test("checkout without first name", async ({ page }) => {
+  await page.goto("https://www.saucedemo.com");
+  await page.getByPlaceholder("Username").fill("standard_user");
+  await page.getByPlaceholder("Password").fill("secret_sauce");
+  await page.getByRole("button", { name: "Login" }).click();
+  const backpack = page
+    .locator(".inventory_item")
+    .filter({ hasText: "Sauce Labs Backpack" });
+  await backpack
+    .getByRole("button", { name: "Add to cart" })
+    .click();
+  await page.locator(".shopping_cart_link").click();
+  await page.getByRole("button", { name: "Checkout" }).click();
+
+  // First Name intentionally left empty
+
+  await page.getByPlaceholder("Last Name").fill("QA");
+  await page.getByPlaceholder("Zip/Postal Code").fill("500001");
+  await page.getByRole("button", { name: "Continue" }).click();
+  await expect(
+    page.getByText("Error: First Name is required")
+  ).toBeVisible();
+
+});
   
 
+test("checkout without last name", async ({ page }) => {
+  await page.goto("https://www.saucedemo.com");
+  await page.getByPlaceholder("Username").fill("standard_user");
+  await page.getByPlaceholder("Password").fill("secret_sauce");
+  await page.getByRole("button", { name: "Login" }).click();
+  const backpack = page
+    .locator(".inventory_item")
+    .filter({ hasText: "Sauce Labs Backpack" });
+  await backpack
+    .getByRole("button", { name: "Add to cart" })
+    .click();
+  await page.locator(".shopping_cart_link").click();
+  await page.getByRole("button", { name: "Checkout" }).click();
+
+  // last Name intentionally left empty
+
+  await page.getByPlaceholder("First Name").fill("nbk");
+  await page.getByPlaceholder("Zip/Postal Code").fill("500001");
+  await page.getByRole("button", { name: "Continue" }).click();
+  await expect(
+    page.getByText("Error: Last Name is required")
+  ).toBeVisible();
+
+});
+
+test("checkout without Zip/Postal Code", async ({ page }) => {
+  await page.goto("https://www.saucedemo.com");
+  await page.getByPlaceholder("Username").fill("standard_user");
+  await page.getByPlaceholder("Password").fill("secret_sauce");
+  await page.getByRole("button", { name: "Login" }).click();
+  const backpack = page
+    .locator(".inventory_item")
+    .filter({ hasText: "Sauce Labs Backpack" });
+  await backpack
+    .getByRole("button", { name: "Add to cart" })
+    .click();
+  await page.locator(".shopping_cart_link").click();
+  await page.getByRole("button", { name: "Checkout" }).click();
+
+  // Zip/Postal Code intentionally left empty
+
+  await page.getByPlaceholder("First Name").fill("nbk");
+  await page.getByPlaceholder("Last Name").fill("QA");
+  await page.getByRole("button", { name: "Continue" }).click();
+  await expect(page.getByText("Error: Postal Code is required")).toBeVisible();
+
+});
