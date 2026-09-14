@@ -8,7 +8,8 @@ import {test,expect} from "@playwright/test";
     await page.getByRole("button",{name:"Sign In"}).click();
     await expect(page.getByText("Signed in as test@playlab.com"))
     .toBeVisible();
-})*/
+})
+
 
 test.skip("double click test", async ({ page }) => {
   await page.goto("https://playwrightlab.github.io/index.html");
@@ -207,6 +208,147 @@ test("focuses full name input", async ({ page }) => {
   await fullName.focus();
   //assertion
   await expect(fullName).toBeFocused();
-  await page.keyboard.type("john");
+  await page.keyboard.type("john");*/
 
+
+test.skip("date picker select", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+    //verify Form Elements heading
+  await expect(page.getByRole("heading",{name: "Form Elements"})).toBeVisible();
+   // Custom Date Picker
+  const dateInput = page.getByPlaceholder("Click to select date...");
+  await dateInput.click();
+  await page.getByRole("button",{name:"13",exact:true}).click();
+  await expect(dateInput).toHaveValue("9/13/2026");
+
+});
+test.skip("date picker - read month and year", async ({ page }) => {
+
+  await page.goto("https://playwrightlab.github.io/index.html");
+
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+
+  await page.getByRole("button", { name: "Sign In" }).click();
+
+  await expect(
+    page.getByText("Signed in as test@playlab.com")
+  ).toBeVisible();
+
+  // Navigate to Forms
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+
+  // Verify Forms page
+  await expect(
+    page.getByRole("heading", { name: "Form Elements" })
+  ).toBeVisible();
+
+  // Open date picker
+  const dateInput = page.getByPlaceholder("Click to select date...");
+  await dateInput.click();
+  // Locate month/year displayed in calendar
+  const monthYear = page.getByTestId("dp-month-year");
+  //next month button
+  const nextMonth = page.getByTestId("dp-next-month");
+  //move to dec
+  while((await monthYear.textContent())?.trim()!=="December 2026")
+  {
+    await nextMonth.click();
+
+  }
+  // Select December 13
+  await page.getByRole("button", {
+    name: "13",
+    exact: true
+  }).click();
+
+  // Verify selected date
+  await expect(dateInput).toHaveValue("12/13/2026");
+});
+
+test.skip("slider test",async({page})=>{
+  await page.goto("https://playwrightlab.github.io/index.html");
+
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+
+  await page.getByRole("button", { name: "Sign In" }).click();
+
+  await expect(
+    page.getByText("Signed in as test@playlab.com")
+  ).toBeVisible();
+
+  // Navigate to Forms
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+
+  // Verify Forms page
+  await expect(
+    page.getByRole("heading", { name: "Form Elements" })
+  ).toBeVisible();
+  const slider = page.locator('input[type="range"]').first();
+  await slider.fill("85");
+  await expect(slider).toHaveValue("85");
+});
+
+test("slider - min max step", async ({ page }) => {
+
+  await page.goto("https://playwrightlab.github.io/index.html");
+
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+
+  await page.getByRole("button", { name: "Sign In" }).click();
+
+  // Verify login
+  await expect(
+    page.getByText("Signed in as test@playlab.com")
+  ).toBeVisible();
+
+  // Go to Dashboard → Forms
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+
+  // Verify Forms page
+  await expect(
+    page.getByRole("heading", { name: "Form Elements" })
+  ).toBeVisible();
+
+  // Locate first slider
+  const volumeSlider = page.locator('input[type="range"]').first();
+
+  // Read min, max and step
+  console.log("Min:", await volumeSlider.getAttribute("min"));
+  console.log("Max:", await volumeSlider.getAttribute("max"));
+  console.log("Step:", await volumeSlider.getAttribute("step"));
+  console.log("value:", await volumeSlider.getAttribute("value"));
+
+
+  // Set slider value
+  await volumeSlider.fill("80");
+
+  // Verify slider value
+  await expect(volumeSlider).toHaveValue("80");
 });
