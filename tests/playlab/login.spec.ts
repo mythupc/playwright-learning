@@ -1,0 +1,478 @@
+import {test,expect} from "@playwright/test";
+/*test("login test",async({page}) =>{
+    await page.goto("https://playwrightlab.github.io/index.html?utm_source=chatgpt.com");
+    await page.getByRole("link", { name: "Login" , exact : true}).click();
+    await expect(page).toHaveURL("https://playwrightlab.github.io/login.html");
+    await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+    await page.getByPlaceholder("Enter your password").fill("Password123");
+    await page.getByRole("button",{name:"Sign In"}).click();
+    await expect(page.getByText("Signed in as test@playlab.com"))
+    .toBeVisible();
+})
+
+
+test.skip("double click test", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-interactions").click();
+  // Verify Interactions heading
+  await expect(page.getByRole("heading", { name: "Interactions" })).toBeVisible();
+  // Verify Double Click button
+  await expect(page.getByRole("button", { name: "Double Click Me" })).toBeVisible();
+  // Double click
+  await page.getByRole("button", {name: "Double Click Me"}).dblclick();
+
+  //verify right click button
+  await expect(page.getByRole("button", { name: "Right Click Me" })).toBeVisible();
+  // right click
+  await page.getByRole("button", {name: "Right Click Me"}).click({button :"right"});
+ 
+
+});
+
+test.skip("press action", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-a11y").click();
+  //verify accessibility heading
+  await expect(page.getByRole("heading",{name: "Accessibility (a11y)"})).toBeVisible();
+  //verify button is visible 
+  await expect(page.getByTestId("a11y-btn-1")).toBeVisible();
+  //press
+  await page.getByTestId("a11y-btn-1").press("Enter");
+});
+
+test.skip("check actions", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+  //verify Form Elements heading
+ await expect(page.getByRole("heading",{name: "Form Elements"})).toBeVisible();
+ //expect label to visible
+ await expect(page.getByText("Skills")).toBeVisible();
+ //check java option
+ await page.getByTestId("check-java").check();
+ //check option is checked or not
+ await expect(page.getByTestId("check-java")).toBeChecked();
+ //uncheck java option
+ await page.getByTestId("check-java").uncheck();
+ //check option is checked or not
+ await expect(page.getByTestId("check-java")).not.toBeChecked();
+
+
+});
+
+test.skip("dropdown", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+  //verify Form Elements heading
+ await expect(page.getByRole("heading",{name: "Form Elements"})).toBeVisible();
+ await page.getByTestId("custom-dropdown-trigger").click();
+ await page.getByTestId("custom-opt-high").click();
+});
+
+test.skip("Hover test", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-interactions").click();
+  // Verify Interactions heading
+  await expect(page.getByRole("heading", { name: "Interactions" })).toBeVisible();
+  //
+  await expect(page.getByTestId("tooltip-btn")).toBeVisible();
+  //hover that button
+  await page.getByTestId("tooltip-btn").hover();
+  await expect(page.getByTestId("custom-tooltip")).toBeVisible();
+});
+
+
+test.skip("focuses full name input", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+    //verify Form Elements heading
+  await expect(page.getByRole("heading",{name: "Form Elements"})).toBeVisible();
+  //storing in a var
+  const fullName = page.getByTestId("input-fullname");
+  //focus
+  await fullName.focus();
+  //assertion
+  await expect(fullName).toBeFocused();
+  //blur
+  await fullName.blur();
+  //assertion for blur
+  await expect(fullName).not.toBeFocused();
+
+});
+
+test.skip("modifiers practice using ctrl", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+    //verify Form Elements heading
+  await expect(page.getByRole("heading",{name: "Form Elements"})).toBeVisible();
+  //verify resource heading
+  await expect(page.getByRole("heading",{name:"Resources"})).toBeVisible();
+  await page.getByRole("link",{name : "Playwright Docs"}).click({modifiers:["Control"]});
+});
+
+test("force close check", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").hover();
+  await page.getByRole("link",{name:"Dynamic Content"}).click();
+  await expect(page.getByRole("heading",{name:"Dynamic Content"})).toBeVisible();
+  //finding input element & stores in a var
+  const input = page.getByTestId("toggle-input");
+  //checked it is enabled
+  await expect(input).toBeEnabled();
+  //find button & click
+  await page.getByRole("button",{name : "Disable Input"}).click();
+  //checked it is disabled
+  await expect(input).toBeDisabled();
+  await input.click({force:true});
+
+});
+
+test("focuses full name input", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+    //verify Form Elements heading
+  await expect(page.getByRole("heading",{name: "Form Elements"})).toBeVisible();
+  //storing in a var
+  const fullName = page.getByTestId("input-fullname");
+  //focus
+  await fullName.focus();
+  //assertion
+  await expect(fullName).toBeFocused();
+  await page.keyboard.type("john");*/
+
+
+test.skip("date picker select", async ({ page }) => {
+  await page.goto("https://playwrightlab.github.io/index.html");
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+  await page.getByRole("button", { name: "Sign In" }).click();
+  await expect(page.getByText("Signed in as test@playlab.com")).toBeVisible();
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+    //verify Form Elements heading
+  await expect(page.getByRole("heading",{name: "Form Elements"})).toBeVisible();
+   // Custom Date Picker
+  const dateInput = page.getByPlaceholder("Click to select date...");
+  await dateInput.click();
+  await page.getByRole("button",{name:"13",exact:true}).click();
+  await expect(dateInput).toHaveValue("9/13/2026");
+
+});
+test.skip("date picker - read month and year", async ({ page }) => {
+
+  await page.goto("https://playwrightlab.github.io/index.html");
+
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+
+  await page.getByRole("button", { name: "Sign In" }).click();
+
+  await expect(
+    page.getByText("Signed in as test@playlab.com")
+  ).toBeVisible();
+
+  // Navigate to Forms
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+
+  // Verify Forms page
+  await expect(
+    page.getByRole("heading", { name: "Form Elements" })
+  ).toBeVisible();
+
+  // Open date picker
+  const dateInput = page.getByPlaceholder("Click to select date...");
+  await dateInput.click();
+  // Locate month/year displayed in calendar
+  const monthYear = page.getByTestId("dp-month-year");
+  //next month button
+  const nextMonth = page.getByTestId("dp-next-month");
+  //move to dec
+  while((await monthYear.textContent())?.trim()!=="December 2026")
+  {
+    await nextMonth.click();
+
+  }
+  // Select December 13
+  await page.getByRole("button", {
+    name: "13",
+    exact: true
+  }).click();
+
+  // Verify selected date
+  await expect(dateInput).toHaveValue("12/13/2026");
+});
+
+test.skip("slider test",async({page})=>{
+  await page.goto("https://playwrightlab.github.io/index.html");
+
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+
+  await page.getByRole("button", { name: "Sign In" }).click();
+
+  await expect(
+    page.getByText("Signed in as test@playlab.com")
+  ).toBeVisible();
+
+  // Navigate to Forms
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+
+  // Verify Forms page
+  await expect(
+    page.getByRole("heading", { name: "Form Elements" })
+  ).toBeVisible();
+  const slider = page.locator('input[type="range"]').first();
+  await slider.fill("85");
+  await expect(slider).toHaveValue("85");
+});
+
+test.skip("slider - min max step", async ({ page }) => {
+
+  await page.goto("https://playwrightlab.github.io/index.html");
+
+  // Login
+  await page.getByRole("link", { name: "Login", exact: true }).click();
+
+  await page.getByPlaceholder("you@example.com").fill("test@playlab.com");
+  await page.getByPlaceholder("Enter your password").fill("Password123");
+
+  await page.getByRole("button", { name: "Sign In" }).click();
+
+  // Verify login
+  await expect(
+    page.getByText("Signed in as test@playlab.com")
+  ).toBeVisible();
+
+  // Go to Dashboard → Forms
+  await page.getByTestId("go-to-dashboard").click();
+  await page.getByTestId("nav-menu").click();
+  await page.getByTestId("nav-forms").click();
+
+  // Verify Forms page
+  await expect(
+    page.getByRole("heading", { name: "Form Elements" })
+  ).toBeVisible();
+
+  // Locate first slider
+  const volumeSlider = page.locator('input[type="range"]').first();
+
+  // Read min, max and step
+  console.log("Min:", await volumeSlider.getAttribute("min"));
+  console.log("Max:", await volumeSlider.getAttribute("max"));
+  console.log("Step:", await volumeSlider.getAttribute("step"));
+  console.log("value:", await volumeSlider.getAttribute("value"));
+
+
+  // Set slider value
+  await volumeSlider.fill("80");
+
+  // Verify slider value
+  await expect(volumeSlider).toHaveValue("80");
+});
+
+test.skip("handle alert dialog", async ({ page }) => {
+
+  await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html"
+    );
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    // Listen for dialog
+    page.on("dialog", async dialog => {
+
+        console.log("Dialog type:", dialog.type());
+        console.log("Dialog message:", dialog.message());
+
+        await dialog.accept();
+    });
+
+    // Trigger alert
+    await page.getByRole("button", {
+        name: "Simple Alert"
+    }).click();
+
+});
+
+test.skip("confirm dialog - accept", async ({ page }) => {
+
+    await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html"
+    );
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    page.on("dialog", async dialog => {
+
+        console.log("Type:", dialog.type());
+        console.log("Message:", dialog.message());
+
+        await dialog.accept();
+    });
+
+    await page.getByRole("button", {
+        name: "Confirmation Alert"
+    }).click();
+});
+
+test.skip("confirm dialog - dismiss", async ({ page }) => {
+
+    await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html"
+    );
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    page.on("dialog", async dialog => {
+
+        console.log("Type:", dialog.type());
+        console.log("Message:", dialog.message());
+
+        await dialog.dismiss();
+    });
+
+    await page.getByRole("button", {
+        name: "Confirmation Alert"
+    }).click();
+});
+
+test.skip("prompt box", async ({ page }) => {
+
+    await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html");
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    page.on("dialog", async dialog => {
+
+        console.log("Type:", dialog.type());
+        console.log("Message:", dialog.message());
+
+        await dialog.accept("chinnu");
+    });
+
+    await page.getByRole("button", {
+        name: "Prompt Alert"
+    }).click();
+});
+
+
+
+test("prompt using waitForEvent", async ({ page }) => {
+
+    await page.goto("https://testautomationpractice.blogspot.com/p/playwrightpractice.html");
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    const dialogPromise = page.waitForEvent("dialog");
+
+    // trigger prompt
+    await page.getByRole("button", {
+    name: "Prompt Alert"
+    }).click();
+    const dialog = await dialogPromise;
+    // accept with 
+  await dialog.accept("mythu");
+});
