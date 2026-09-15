@@ -309,7 +309,7 @@ test.skip("slider test",async({page})=>{
   await expect(slider).toHaveValue("85");
 });
 
-test("slider - min max step", async ({ page }) => {
+test.skip("slider - min max step", async ({ page }) => {
 
   await page.goto("https://playwrightlab.github.io/index.html");
 
@@ -351,4 +351,128 @@ test("slider - min max step", async ({ page }) => {
 
   // Verify slider value
   await expect(volumeSlider).toHaveValue("80");
+});
+
+test.skip("handle alert dialog", async ({ page }) => {
+
+  await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html"
+    );
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    // Listen for dialog
+    page.on("dialog", async dialog => {
+
+        console.log("Dialog type:", dialog.type());
+        console.log("Dialog message:", dialog.message());
+
+        await dialog.accept();
+    });
+
+    // Trigger alert
+    await page.getByRole("button", {
+        name: "Simple Alert"
+    }).click();
+
+});
+
+test.skip("confirm dialog - accept", async ({ page }) => {
+
+    await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html"
+    );
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    page.on("dialog", async dialog => {
+
+        console.log("Type:", dialog.type());
+        console.log("Message:", dialog.message());
+
+        await dialog.accept();
+    });
+
+    await page.getByRole("button", {
+        name: "Confirmation Alert"
+    }).click();
+});
+
+test.skip("confirm dialog - dismiss", async ({ page }) => {
+
+    await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html"
+    );
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    page.on("dialog", async dialog => {
+
+        console.log("Type:", dialog.type());
+        console.log("Message:", dialog.message());
+
+        await dialog.dismiss();
+    });
+
+    await page.getByRole("button", {
+        name: "Confirmation Alert"
+    }).click();
+});
+
+test.skip("prompt box", async ({ page }) => {
+
+    await page.goto(
+        "https://testautomationpractice.blogspot.com/p/playwrightpractice.html");
+
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    page.on("dialog", async dialog => {
+
+        console.log("Type:", dialog.type());
+        console.log("Message:", dialog.message());
+
+        await dialog.accept("chinnu");
+    });
+
+    await page.getByRole("button", {
+        name: "Prompt Alert"
+    }).click();
+});
+
+
+
+test("prompt using waitForEvent", async ({ page }) => {
+
+    await page.goto("https://testautomationpractice.blogspot.com/p/playwrightpractice.html");
+    await expect(
+        page.getByRole("heading", {
+            name: "Automation Testing Practice"
+        })
+    ).toBeVisible();
+
+    const dialogPromise = page.waitForEvent("dialog");
+
+    // trigger prompt
+    await page.getByRole("button", {
+    name: "Prompt Alert"
+    }).click();
+    const dialog = await dialogPromise;
+    // accept with 
+  await dialog.accept("mythu");
 });
