@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 //single file upload
+test.describe("file handling", ()=>{
 test.skip("upload file", async( {page})=>{
     await page.goto("https://testautomationpractice.blogspot.com/p/playwrightpractice.html");
     await expect(page.getByRole("heading",{name :"Automation Testing Practice"})).toBeVisible();
@@ -26,4 +27,5 @@ test("date picker", async ({page})=>{
     await expect(page.getByRole("heading",{name :"Automation Testing Practice"})).toBeVisible();
     await page.locator("#datepicker").click();
     await page.getByRole("link",{name:"13",exact:true}).click(); 
+});
 });
